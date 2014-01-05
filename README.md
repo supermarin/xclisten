@@ -1,29 +1,25 @@
-# Xclisten
+# XCListen
 
-TODO: Write a gem description
+A zero-configuration filesystem watcher for ObjectiveC.
+It will:
+
+- run tests each time you save a file
+- install pods each time you save Podfile
+- format your tests with RSpec-style output using [XCPretty](https://github.com/mneorr/xcpretty)
 
 ## Installation
-
-Add this line to your application's Gemfile:
-
-    gem 'xclisten'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
 
     $ gem install xclisten
 
 ## Usage
 
-TODO: Write usage instructions here
+```
+$ xclisten
+```
+Simple, huh?
 
-## Contributing
 
-1. Fork it ( http://github.com/<my-github-username>/xclisten/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+## TODO
+
+- Device flag (choose between iphone5s, iPad, iPad Air,...)
+

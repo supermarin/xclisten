@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+
+if $0 == __FILE__
+  $:.unshift File.expand_path('../../lib', __FILE__)
+end
+
+require 'xclisten'
+require 'listen'
+require 'optparse'
+
+OptionParser.new do |opts|
+  opts.banner = "Usage: xcodebuild [options] | xcpretty"
+  opts.on('--osx', 'Run with OSX sdk (without simulator)') do
+    XCListen::SDK = ''
+  end
+  opts.on('--ios', '[DEFAULT] Run with iOS sdk') do
+    XCListen::SDK = '-sdk iphonesimulator'
+  end
+  opts.on_tail('-h', '--help', 'Show this message') { puts opts; exit }
+  opts.on_tail("-v", "--version", "Show version") { puts XCListen::VERSION; exit }
+  opts.parse!
+end
+
+fork { XCListen.listen }
+Process.wait
+
