@@ -15,6 +15,7 @@ $ gem install xclisten
 
 ## Usage
 
+Run this command from the same directory as your `.xcworkspace`:
 ```
 $ xclisten
 ```
