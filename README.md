@@ -1,6 +1,6 @@
 # XCListen
 
-A zero-configuration filesystem watcher for ObjectiveC. It determines your `.xcworkspace` and scheme name automatically, and:
+A zero-configuration filesystem watcher for ObjectiveC. It determines your workspace and scheme automatically, and:
 
 - runs tests each time you save a file
 - runs `pod install` each time you save the Podfile
