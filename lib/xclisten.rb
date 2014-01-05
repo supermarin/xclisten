@@ -1,4 +1,5 @@
-require "xclisten/version"
+require 'xclisten/version'
+require 'xclisten/shell_task'
 require 'listen'
 
 module XCListen
@@ -7,10 +8,12 @@ module XCListen
 
   SDK = '-sdk iphonesimulator'
 
+  #TODO: make this recursive
   def workspace_name
     Dir.entries(Dir.pwd).detect { |f| f =~ /.xcworkspace/ }
   end
 
+  #TODO: when workspace_name gets recursive, use `basename`
   def project_name
     workspace_name.split('.').first
   end
@@ -26,9 +29,7 @@ module XCListen
   end
 
   def run_tests
-    task = "#{xcodebuild} test 2> xcodebuild_error.log | xcpretty -tc"
-    puts task + "\n\n"
-    system(task)
+    ShellTask.run("#{xcodebuild} test 2> xcodebuild_error.log | xcpretty -tc")
   end
 
   def listen
