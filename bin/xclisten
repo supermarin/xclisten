@@ -21,6 +21,8 @@ OptionParser.new do |opts|
   opts.parse!
 end
 
-fork { XCListen.listen }
-Process.wait
+pid = fork     { XCListen.listen      }
+trap("SIGINT") { Process.kill(9, pid) }
+
+Process.waitpid(pid)
 
