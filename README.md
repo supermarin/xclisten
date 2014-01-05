@@ -27,7 +27,7 @@ If you have an OSX project, you'll want to run it with `--osx` flag.
 
 ## Something went wrong!
 
-No worries, we've got your back. Just `tail -f xcodebuild_error.log` and let us know what's happening.
+No worries, just `tail -f xcodebuild_error.log` and let us know what's happening.
 
 ## TODO
 
