@@ -7,6 +7,7 @@ It will:
 - install pods each time you save Podfile
 - format your tests with RSpec-style output using [XCPretty](https://github.com/mneorr/xcpretty)
 
+
 ## Installation
 
     $ gem install xclisten
@@ -18,6 +19,7 @@ $ xclisten
 ```
 Simple, huh?
 
+![](http://i.imgur.com/JpsMMBW.gif)
 
 ## TODO
 
