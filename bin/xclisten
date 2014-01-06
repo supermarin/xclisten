@@ -8,21 +8,29 @@ require 'xclisten'
 require 'listen'
 require 'optparse'
 
+@options = {}
+
 OptionParser.new do |opts|
   opts.banner = "Usage: xcodebuild [options] | xcpretty"
   opts.on('--osx', 'Run with OSX sdk (without simulator)') do
-    XCListen::SDK = ''
+    @options[:sdk] = ''
   end
   opts.on('--ios', '[DEFAULT] Run with iOS sdk') do
-    XCListen::SDK = '-sdk iphonesimulator'
+    @options[:sdk] = '-sdk iphonesimulator'
+  end
+  opts.on('-d', '--device', 'Simulated device [iphone5s, iphone5, iphone4]. Default is iphone5s') do |device|
+    @options[:device] = device
+  end
+  opts.on('-s', '--scheme', 'BYOS (Bring your own scheme)') do |scheme|
+    @options[:scheme] = scheme
   end
   opts.on_tail('-h', '--help', 'Show this message') { puts opts; exit }
   opts.on_tail("-v", "--version", "Show version") { puts XCListen::VERSION; exit }
   opts.parse!
 end
 
-pid = fork     { XCListen.listen      }
+pid = fork     { XCListen.new(@options).listen }
 trap("SIGINT") { Process.kill(9, pid) }
 
-Process.waitpid(pid)
+Process.wait(pid)
 

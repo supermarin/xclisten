@@ -2,11 +2,23 @@ require 'xclisten/version'
 require 'xclisten/shell_task'
 require 'listen'
 
-module XCListen
+class XCListen
 
-  module_function
+  attr_reader :device
+  attr_reader :scheme
+  attr_reader :sdk
 
-  SDK = '-sdk iphonesimulator'
+  def initialize(opts = {})
+    @device = IOS_DEVICES[opts[:device]] || IOS_DEVICES['iphone5s']
+    @scheme = opts[:scheme] || project_name
+    @sdk = opts[:sdk] || 'iphonesimulator'
+  end
+
+  IOS_DEVICES = {
+    'iphone5s' => 'iPhone Retina (4-inch 64-bit)',
+    'iphone5' => 'iPhone Retina (4-inch)',
+    'iphone4' => 'iPhone Retina (3.5-inch)'
+  }
 
   #TODO: make this recursive
   def workspace_name
@@ -19,7 +31,7 @@ module XCListen
   end
 
   def xcodebuild
-    "xcodebuild -workspace #{workspace_name} -scheme #{project_name} #{SDK}"
+    "xcodebuild -workspace #{workspace_name} -scheme #{@scheme} -sdk #{@sdk} -destination 'name=#{@device}'"
   end
 
   def install_pods

@@ -1,3 +1,3 @@
-module XCListen
+class XCListen
   VERSION = "0.0.2"
 end

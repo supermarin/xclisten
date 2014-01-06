@@ -1,4 +1,4 @@
-module XCListen
+class XCListen
 
   class ShellTask
 
