@@ -11,7 +11,7 @@ require 'optparse'
 @options = {}
 
 OptionParser.new do |opts|
-  opts.banner = "Usage: xcodebuild [options] | xcpretty"
+  opts.banner = "Usage: xclisten [optional flags]"
   opts.on('--osx', 'Run with OSX sdk (without simulator)') do
     @options[:sdk] = ''
   end
