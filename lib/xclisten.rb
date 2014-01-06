@@ -1,22 +1,37 @@
-require "xclisten/version"
+require 'xclisten/version'
+require 'xclisten/shell_task'
 require 'listen'
 
-module XCListen
+class XCListen
 
-  module_function
+  attr_reader :device
+  attr_reader :scheme
+  attr_reader :sdk
 
-  SDK = '-sdk iphonesimulator'
+  def initialize(opts = {})
+    @device = IOS_DEVICES[opts[:device]] || IOS_DEVICES['iphone5s']
+    @scheme = opts[:scheme] || project_name
+    @sdk = opts[:sdk] || 'iphonesimulator'
+  end
 
+  IOS_DEVICES = {
+    'iphone5s' => 'iPhone Retina (4-inch 64-bit)',
+    'iphone5' => 'iPhone Retina (4-inch)',
+    'iphone4' => 'iPhone Retina (3.5-inch)'
+  }
+
+  #TODO: make this recursive
   def workspace_name
     Dir.entries(Dir.pwd).detect { |f| f =~ /.xcworkspace/ }
   end
 
+  #TODO: when workspace_name gets recursive, use `basename`
   def project_name
     workspace_name.split('.').first
   end
 
   def xcodebuild
-    "xcodebuild -workspace #{workspace_name} -scheme #{project_name} #{SDK}"
+    "xcodebuild -workspace #{workspace_name} -scheme #{@scheme} -sdk #{@sdk} -destination 'name=#{@device}'"
   end
 
   def install_pods
@@ -26,9 +41,7 @@ module XCListen
   end
 
   def run_tests
-    task = "#{xcodebuild} test 2> xcodebuild_error.log | xcpretty -tc"
-    puts task + "\n\n"
-    system(task)
+    ShellTask.run("#{xcodebuild} test 2> xcodebuild_error.log | xcpretty -tc")
   end
 
   def listen
