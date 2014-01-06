@@ -4,7 +4,7 @@ module XCListen
 
     def self.run(args)
       puts args + "\n\n"
-      `#{args}`
+      fork { exec args }
     end
 
   end
