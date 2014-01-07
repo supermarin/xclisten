@@ -63,24 +63,19 @@ class XCListen
     ENV['DYLD_LIBRARY_PATH']   = ENV['BUILT_PRODUCTS_DIR']
   end
 
-  def run_xctest(test_class, test_method)
+  def run_xctest(test_classes)
     configure_environment
-    ShellTask.run("#{xcodebuild} | xcpretty -c")
+    ShellTask.run("#{xcodebuild} 1> /dev/null")
     bundle_path = "#{ENV['BUILT_PRODUCTS_DIR']}/#{ENV['FULL_PRODUCT_NAME']}"
-    scope = xctest_scope(test_class, test_method)
-    ShellTask.run("#{xctest} #{scope} #{bundle_path}")
+    test_classes.each do |test_class|
+      ShellTask.run("#{xctest} -test #{test_class} #{bundle_path}")
+    end
   end
 
-  def xctest_scope(test_class, test_method)
-    return "" unless test_class
-    return "-test #{test_class}/#{test_method}" if test_method
-    "-test #{test_class}"
-  end
-
-  def run_tests(test_files)
-    puts "test files: #{test_files}"
-    if test_files.size > 0
-      test_files.each {|n| run_xctest(n, nil)}
+  def run_tests(test_classes)
+    puts "test classes: #{test_classes}"
+    if test_classes and test_classes.size > 0
+      run_xctest(test_classes)
     else
       ShellTask.run("#{xcodebuild} test 2> xcodebuild_error.log | xcpretty -tc")
     end
@@ -108,22 +103,22 @@ class XCListen
       if modified.first =~ /Podfile$/
         install_pods
       else
-        run_tests(find_test_files(modified))
+        run_tests(find_test_classes(modified))
       end
-    end
-
-    def find_test_files(files)
-      files.map do |path|
-        if path =~ %r{/(\w+(Tests|Spec))\.(h|m)$}
-          path
-        elsif path =~ %r{/(\w+)\.(h|m)$}
-          Dir.glob("**/#{$1}{Tests,Spec}.m")
-        end
-      end.flatten.compact.map {|path| File.basename(path, ".*") }
     end
 
     listener.start
     sleep
+  end
+
+  def find_test_classes(files)
+    files.map do |path|
+      if path =~ %r{/(\w+(Tests|Spec))\.(h|m)$}
+        path
+      elsif path =~ %r{/(\w+)\.(h|m)$}
+        Dir.glob("**/#{$1}{Tests,Spec}.m")
+      end
+    end.flatten.compact.map {|path| File.basename(path, ".*") }
   end
 
 end
