@@ -1,4 +1,5 @@
 # XCListen
+[![Build Status](https://travis-ci.org/mneorr/xclisten.png?branch=master)](https://travis-ci.org/mneorr/xclisten)
 
 A zero-configuration filesystem watcher for ObjectiveC. It determines your workspace and scheme automatically, and:
 
@@ -6,7 +7,6 @@ A zero-configuration filesystem watcher for ObjectiveC. It determines your works
 - runs `pod install` each time you save the Podfile
 - formats your tests with RSpec-style output using [XCPretty](https://github.com/mneorr/xcpretty)
 
-[![Build Status](https://travis-ci.org/mneorr/xclisten.png?branch=master)](https://travis-ci.org/mneorr/xclisten)
 
 ## Installation
 
