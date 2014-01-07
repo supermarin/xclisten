@@ -1,3 +1,3 @@
 rvm: 2.1.0
-script: rspec spec
+script: rake ci
 
