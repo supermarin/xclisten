@@ -34,9 +34,13 @@ class XCListen
   end
 
   def xcodebuild
-    cmd = "xcodebuild -workspace #{workspace} -scheme #{scheme} -sdk #{sdk}"
+    cmd = "xcodebuild -workspace #{workspace} -scheme #{scheme} -sdk #{sdk} -configuration Debug"
     cmd += " -destination 'name=#{device}'" unless @sdk == 'macosx'
     cmd
+  end
+
+  def xctest
+    @@xctest ||= `#{xcodebuild} -find-executable xctest`.strip
   end
 
   def install_pods
@@ -45,6 +49,32 @@ class XCListen
       puts 'Giving Xcode some time to index...'
       sleep 10
     end
+  end
+
+  def configure_environment
+    task = `#{xcodebuild} -showBuildSettings test`
+    task.each_line do |line|
+      if line =~ /^\s(.*)=(.*)/
+        variable, value = line.split('=')
+        ENV[variable.strip] = value.strip
+      end
+    end
+    ENV['DYLD_FRAMEWORK_PATH'] = ENV['BUILT_PRODUCTS_DIR']
+    ENV['DYLD_LIBRARY_PATH']   = ENV['BUILT_PRODUCTS_DIR']
+  end
+
+  def run_xctest(test_class, test_method)
+    configure_environment
+    ShellTask.run("#{xcodebuild} | xcpretty -c")
+    bundle_path = "#{ENV['BUILT_PRODUCTS_DIR']}/#{ENV['FULL_PRODUCT_NAME']}"
+    scope = xctest_scope(test_class, test_method)
+    ShellTask.run("#{xctest} #{scope} #{bundle_path}")
+  end
+
+  def xctest_scope(test_class, test_method)
+    return "" unless test_class
+    return "-test #{test_class}/#{test_method}" if test_method
+    "-test #{test_class}"
   end
 
   def run_tests
