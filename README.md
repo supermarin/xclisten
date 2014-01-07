@@ -43,6 +43,5 @@ No worries, just `tail -f xcodebuild_error.log` and let us know what's happening
 
 ## TODO
 
-- Device flag (choose between iphone5s, iPad, iPad Air,...)
 - Support non-cocoapods projects, when there's no .xcworkspace
 - Acceptance tests
