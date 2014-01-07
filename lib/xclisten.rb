@@ -27,10 +27,6 @@ class XCListen
     true
   end
 
-  def has_workspaces?
-    workspace_name.nil?
-  end
-
   #TODO: make this recursive
   def workspace_name
     Dir.entries(Dir.pwd).detect { |f| f =~ /.xcworkspace/ }
