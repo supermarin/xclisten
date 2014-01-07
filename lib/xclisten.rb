@@ -4,9 +4,7 @@ require 'listen'
 
 class XCListen
 
-  attr_reader :device
-  attr_reader :scheme
-  attr_reader :sdk
+  attr_reader :device, :scheme, :sdk
 
   def initialize(opts = {})
     @device = IOS_DEVICES[opts[:device]] || IOS_DEVICES['iphone5s']
@@ -19,6 +17,19 @@ class XCListen
     'iphone5' => 'iPhone Retina (4-inch)',
     'iphone4' => 'iPhone Retina (3.5-inch)'
   }
+
+  def self.can_run?
+    if Dir.entries(Dir.pwd).detect { |f| f =~ /.xcworkspace/ }.nil?
+      puts "Please run xclisten from a directory with an xcworkspace."
+      return false;
+    end
+    
+    true
+  end
+
+  def has_workspaces?
+    workspace_name.nil?
+  end
 
   #TODO: make this recursive
   def workspace_name
@@ -44,7 +55,8 @@ class XCListen
     ShellTask.run("#{xcodebuild} test 2> xcodebuild_error.log | xcpretty -tc")
   end
 
-  def listen
+  def listen    
+    puts "Started xclistening to #{workspace_name}"
     ignored = [/.git/, /.xc(odeproj|workspace|userdata|scheme|config)/, /.lock$/, /\.txt$/, /\.log$/]
 
     listener = Listen.to(Dir.pwd, :ignore => ignored) do |modified, added, removed|
