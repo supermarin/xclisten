@@ -77,8 +77,13 @@ class XCListen
     "-test #{test_class}"
   end
 
-  def run_tests
-    ShellTask.run("#{xcodebuild} test 2> xcodebuild_error.log | xcpretty -tc")
+  def run_tests(test_files)
+    puts "test files: #{test_files}"
+    if test_files.size > 0
+      test_files.each {|n| run_xctest(n, nil)}
+    else
+      ShellTask.run("#{xcodebuild} test 2> xcodebuild_error.log | xcpretty -tc")
+    end
   end
 
   #TODO TEST THIS SPIKE
@@ -103,8 +108,18 @@ class XCListen
       if modified.first =~ /Podfile$/
         install_pods
       else
-        run_tests
+        run_tests(find_test_files(modified))
       end
+    end
+
+    def find_test_files(files)
+      files.map do |path|
+        if path =~ %r{/(\w+(Tests|Spec))\.(h|m)$}
+          path
+        elsif path =~ %r{/(\w+)\.(h|m)$}
+          Dir.glob("**/#{$1}{Tests,Spec}.m")
+        end
+      end.flatten.compact.map {|path| File.basename(path, ".*") }
     end
 
     listener.start

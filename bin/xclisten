@@ -33,8 +33,7 @@ OptionParser.new do |opts|
   opts.parse!
 end
 
-# pid = fork     { XCListen.new(@options).listen }
-pid = fork     { XCListen.run_xctest("MappingsTests", nil) } # random example test class
+pid = fork     { XCListen.new(@options).listen }
 trap("SIGINT") { Process.kill(9, pid) }
 Process.wait(pid)
 
