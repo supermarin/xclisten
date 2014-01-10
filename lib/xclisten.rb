@@ -20,12 +20,16 @@ class XCListen
     'iphone4' => 'iPhone Retina (3.5-inch)'
   }
 
+  def self.can_run?
+    self.new.project_name != nil
+  end
+
   def workspace_path
-    @@workspace_path ||= Dir.glob("**/*.xcworkspace").select {|p| !p.include? "xcodeproj"}.first
+    @workspace_path ||= Dir.glob("**/*.xcworkspace").select {|p| !p.include? "xcodeproj"}.first
   end
 
   def project_name
-    File.basename(workspace_path, ".*")
+    File.basename(workspace_path, ".*") if workspace_path
   end
 
   def xcodebuild
