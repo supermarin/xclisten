@@ -37,9 +37,11 @@ class XCListen
   end
 
   def install_pods
-    system 'pod install'
-    puts 'Giving Xcode some time to index...'
-    sleep 10
+    Dir.chdir(File.dirname(workspace_path)) do
+      system 'pod install'
+      puts 'Giving Xcode some time to index...'
+      sleep 10
+    end
   end
 
   def run_tests
