@@ -11,7 +11,7 @@ class XCListen
     end
 
     before(:each) do
-      Dir.stub(:entries).and_return(['SampleProject.xcworkspace'])
+      Dir.stub(:glob).and_return(['SampleProject.xcworkspace'])
     end
 
     context "Defaults" do

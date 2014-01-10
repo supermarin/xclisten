@@ -20,18 +20,16 @@ class XCListen
     'iphone4' => 'iPhone Retina (3.5-inch)'
   }
 
-  #TODO: make this recursive
-  def workspace_name
-    Dir.entries(Dir.pwd).detect { |f| f =~ /.xcworkspace/ }
+  def workspace_path
+    @@workspace_path ||= Dir.glob("**/*.xcworkspace").select {|p| !p.include? "xcodeproj"}.first
   end
 
-  #TODO: when workspace_name gets recursive, use `basename`
   def project_name
-    workspace_name.split('.').first
+    File.basename(workspace_path, ".*")
   end
 
   def xcodebuild
-    "xcodebuild -workspace #{workspace_name} -scheme #{@scheme} -sdk #{@sdk} -destination 'name=#{@device}'"
+    "xcodebuild -workspace #{workspace_path} -scheme #{@scheme} -sdk #{@sdk} -destination 'name=#{@device}'"
   end
 
   def install_pods
