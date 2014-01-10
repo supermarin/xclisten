@@ -21,7 +21,7 @@ OptionParser.new do |opts|
   opts.on('-d', '--device', 'Simulated device [iphone5s, iphone5, iphone4]. Default is iphone5s') do |device|
     @options[:device] = device
   end
-  opts.on('-s', '--scheme', 'BYOS (Bring your own scheme)') do |scheme|
+  opts.on('-s', '--scheme SCHEME', 'BYOS (Bring your own scheme)') do |scheme|
     @options[:scheme] = scheme
   end
   opts.on_tail('-h', '--help', 'Show this message') { puts opts; exit }
