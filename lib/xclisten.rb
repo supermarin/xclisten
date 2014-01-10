@@ -47,6 +47,7 @@ class XCListen
   end
 
   def listen
+    puts "Started xclistening to #{workspace_path}"
     ignored = [/.git/, /.xc(odeproj|workspace|userdata|scheme|config)/, /.lock$/, /\.txt$/, /\.log$/]
 
     listener = Listen.to(Dir.pwd, :ignore => ignored) do |modified, added, removed|
