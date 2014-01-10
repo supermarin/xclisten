@@ -44,10 +44,16 @@ class XCListen
     ShellTask.run("#{xcodebuild} test 2> xcodebuild_error.log | xcpretty -tc")
   end
 
+  def xcodebuild_is_running?
+    `ps | grep '[x]codebuild'`.include? 'xcodebuild'
+  end
+
   def listen
     ignored = [/.git/, /.xc(odeproj|workspace|userdata|scheme|config)/, /.lock$/, /\.txt$/, /\.log$/]
 
     listener = Listen.to(Dir.pwd, :ignore => ignored) do |modified, added, removed|
+      next if xcodebuild_is_running?
+
       system 'clear'
       if modified.first =~ /Podfile$/
         install_pods
