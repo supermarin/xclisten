@@ -29,8 +29,9 @@ OptionParser.new do |opts|
   opts.parse!
 end
 
-pid = fork     { XCListen.new(@options).listen }
-trap("SIGINT") { Process.kill(9, pid) }
+if XCListen.can_run?
+  pid = fork     { XCListen.new(@options).listen }
+  trap("SIGINT") { Process.kill(9, pid) }
 
-Process.wait(pid)
-
+  Process.wait(pid)
+end
