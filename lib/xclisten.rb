@@ -26,6 +26,13 @@ class XCListen
     self.new.project_name != nil
   end
 
+  def print_settings
+    puts "Device:    #{@device}"
+    puts "SDK:       #{@sdk}"
+    puts "Scheme:    #{@scheme}"
+    puts "Workspace: #{@workspace}"
+  end
+
   def workspace_path
     @workspace_path ||= Dir.glob("**/*.xcworkspace").select {|p| !p.include? "xcodeproj"}.first
   end
