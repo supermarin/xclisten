@@ -1,21 +1,21 @@
 Given(/^I am in a directory with an xcworkspace$/) do
-  @basedir = File.expand_path('../fixtures/dir_with_xcworkspace', File.dirname(__FILE__))
+  set_run_path('dir_with_xcworkspace')
 end
 
 Given(/^I am in a directory with a nested xcworkspace$/) do
-  @basedir = File.expand_path('../fixtures/dir_with_nested_xcworkspace', File.dirname(__FILE__))
+  set_run_path('dir_with_nested_xcworkspace')
 end
 
 Given(/^I am in a directory with multiple xcworkspaces$/) do
-  @basedir = File.expand_path('../fixtures/dir_with_multiple_xcworkspaces', File.dirname(__FILE__))
+  set_run_path('dir_with_multiple_xcworkspaces')
 end
 
 Given(/^I am in a directory without an xcworkspace$/) do
-  @basedir = File.expand_path('../fixtures/dir_without_xcworkspace', File.dirname(__FILE__))
+  set_run_path('dir_without_xcworkspace')
 end
 
 When(/^I run xclisten with flags "(.*?)"$/) do |flags|
-  run_xclisten(flags, @basedir || Dir.pwd)
+  run_xclisten(flags)
 end
 
 Then(/^xclisten should be listening to the xcworkspace in the current directory$/) do

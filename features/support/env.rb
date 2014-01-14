@@ -1,10 +1,14 @@
 
 BIN_PATH = File.expand_path('../../bin/xclisten', File.dirname(__FILE__))
 
-def run_xclisten(flags, basedir=Dir.pwd)
-  Dir.chdir(basedir) do
+def run_xclisten(flags)
+  Dir.chdir(@basedir) do
     @output = %x(#{BIN_PATH} #{flags})
   end
+end
+
+def set_run_path(dirname)
+  @basedir = File.expand_path("../fixtures/#{dirname}", File.dirname(__FILE__))
 end
 
 def run_output
@@ -17,4 +21,8 @@ def xcworkspace_path
   else
     ""
   end
+end
+
+Before do
+  @basedir = Dir.pwd
 end
