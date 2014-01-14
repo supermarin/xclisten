@@ -3,7 +3,7 @@ BIN_PATH = File.expand_path('../../bin/xclisten', File.dirname(__FILE__))
 
 def run_xclisten(flags, basedir=Dir.pwd)
   Dir.chdir(basedir) do
-    @output = %x(#{BIN_PATH} #{flags} --print-settings)
+    @output = %x(#{BIN_PATH} #{flags})
   end
 end
 
