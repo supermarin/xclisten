@@ -13,10 +13,10 @@ require 'optparse'
 OptionParser.new do |opts|
   opts.banner = "Usage: xclisten [optional flags]"
   opts.on('--osx', 'Run with OSX sdk (without simulator)') do
-    @options[:sdk] = ''
+    @options[:sdk] = 'macosx'
   end
   opts.on('--ios', '[DEFAULT] Run with iOS sdk') do
-    @options[:sdk] = '-sdk iphonesimulator'
+    @options[:sdk] = 'iphonesimulator'
   end
   opts.on('-d', '--device', 'Simulated device [iphone5s, iphone5, iphone4]. Default is iphone5s') do |device|
     @options[:device] = device
