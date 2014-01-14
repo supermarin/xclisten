@@ -35,7 +35,7 @@ class XCListen
   end
 
   def xcodebuild
-    "xcodebuild -workspace #{workspace_path} -scheme #{@scheme} -sdk #{@sdk} -destination 'name=#{@device}'"
+    "xcodebuild -workspace #{@workspace} -scheme #{@scheme} -sdk #{@sdk} -destination 'name=#{@device}'"
   end
 
   def install_pods

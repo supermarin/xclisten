@@ -59,8 +59,14 @@ class XCListen
     end
 
     it 'uses xcodebuild with given flags' do
-      xclisten = XCListen.new
-      xclisten.xcodebuild.should == "xcodebuild -workspace SampleProject.xcworkspace -scheme SampleProject -sdk iphonesimulator -destination 'name=iPhone Retina (4-inch 64-bit)'"
+      flags = {
+        :workspace => 'Example/Sample.xcworkspace',
+        :scheme => 'kif',
+        :sdk => 'macosx',
+        :device => 'name=iPhone Retina (4-inch 64-bit)'
+      }
+      xclisten = XCListen.new(flags)
+      xclisten.xcodebuild.should == "xcodebuild -workspace #{flags[:workspace]} -scheme #{flags[:scheme]} -sdk #{flags[:sdk]} -destination '#{flags[:device]}'"
     end
   end
 
