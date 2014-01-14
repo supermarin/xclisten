@@ -7,11 +7,13 @@ class XCListen
   attr_reader :device
   attr_reader :scheme
   attr_reader :sdk
+  attr_reader :workspace
 
   def initialize(opts = {})
     @device = IOS_DEVICES[opts[:device]] || IOS_DEVICES['iphone5s']
     @scheme = opts[:scheme] || project_name
     @sdk = opts[:sdk] || 'iphonesimulator'
+    @workspace = opts[:workspace] || workspace_path
   end
 
   IOS_DEVICES = {

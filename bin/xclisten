@@ -24,6 +24,9 @@ OptionParser.new do |opts|
   opts.on('-s', '--scheme SCHEME', 'BYOS (Bring your own scheme)') do |scheme|
     @options[:scheme] = scheme
   end
+  opts.on('-w', '--workspace WORKSPACE', 'BYOW (Bring your own workspace)') do |workspace|
+    @options[:workspace] = workspace
+  end
   opts.on_tail('-h', '--help', 'Show this message') { puts opts; exit }
   opts.on_tail("-v", "--version", "Show version") { puts XCListen::VERSION; exit }
   opts.parse!
