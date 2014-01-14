@@ -20,24 +20,28 @@ class XCListen
     'iphone4' => 'iPhone Retina (3.5-inch)'
   }
 
-  #TODO: make this recursive
-  def workspace_name
-    Dir.entries(Dir.pwd).detect { |f| f =~ /.xcworkspace/ }
+  def self.can_run?
+    self.new.project_name != nil
   end
 
-  #TODO: when workspace_name gets recursive, use `basename`
+  def workspace_path
+    @workspace_path ||= Dir.glob("**/*.xcworkspace").select {|p| !p.include? "xcodeproj"}.first
+  end
+
   def project_name
-    workspace_name.split('.').first
+    File.basename(workspace_path, ".*") if workspace_path
   end
 
   def xcodebuild
-    "xcodebuild -workspace #{workspace_name} -scheme #{@scheme} -sdk #{@sdk} -destination 'name=#{@device}'"
+    "xcodebuild -workspace #{workspace_path} -scheme #{@scheme} -sdk #{@sdk} -destination 'name=#{@device}'"
   end
 
   def install_pods
-    system 'pod install'
-    puts 'Giving Xcode some time to index...'
-    sleep 10
+    Dir.chdir(File.dirname(workspace_path)) do
+      system 'pod install'
+      puts 'Giving Xcode some time to index...'
+      sleep 10
+    end
   end
 
   def run_tests
@@ -45,6 +49,7 @@ class XCListen
   end
 
   def listen
+    puts "Started xclistening to #{workspace_path}"
     ignored = [/.git/, /.xc(odeproj|workspace|userdata|scheme|config)/, /.lock$/, /\.txt$/, /\.log$/]
 
     listener = Listen.to(Dir.pwd, :ignore => ignored) do |modified, added, removed|
