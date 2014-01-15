@@ -32,13 +32,7 @@ OptionParser.new do |opts|
   opts.parse!
 end
 
-if XCListen.can_run?
-  pid = fork     { XCListen.new(@options).listen }
-  trap("SIGINT") { Process.kill(9, pid) }
-else
-  puts "[!] No xcworkspace found in this directory (or any child directories)"
-  exit 1
-end
-
+pid = fork     { XCListen.new(@options).listen }
+trap("SIGINT") { Process.kill(9, pid) }
 Process.wait(pid)
 

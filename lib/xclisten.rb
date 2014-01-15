@@ -22,10 +22,6 @@ class XCListen
     'iphone4' => 'iPhone Retina (3.5-inch)'
   }
 
-  def self.can_run?
-    self.new.project_name != nil
-  end
-
   def workspace_path
     @workspace_path ||= Dir.glob("**/*.xcworkspace").select {|p| !p.include? "xcodeproj"}.first
   end
@@ -50,7 +46,20 @@ class XCListen
     ShellTask.run("#{xcodebuild} test 2> xcodebuild_error.log | xcpretty -tc")
   end
 
+  #TODO TEST THIS SPIKE
+  def validate_run
+    unless can_run?
+      puts "[!] No xcworkspace found in this directory (or any child directories)"
+      exit 1
+    end
+  end
+
+  def can_run?
+    project_name && !project_name.empty?
+  end
+
   def listen
+    validate_run
     puts "Started xclistening to #{workspace_path}"
     ignored = [/.git/, /.xc(odeproj|workspace|userdata|scheme|config)/, /.lock$/, /\.txt$/, /\.log$/]
 

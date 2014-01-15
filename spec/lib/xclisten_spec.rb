@@ -68,6 +68,12 @@ class XCListen
       xclisten = XCListen.new(flags)
       xclisten.xcodebuild.should == "xcodebuild -workspace #{flags[:workspace]} -scheme #{flags[:scheme]} -sdk #{flags[:sdk]} -destination '#{flags[:device]}'"
     end
+
+    it "knows if it can run" do
+      Dir.stub(:glob).and_return([""])
+      xclisten = XCListen.new
+      xclisten.can_run?.should be_false
+    end
   end
 
 end
