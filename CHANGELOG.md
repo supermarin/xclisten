@@ -1,5 +1,17 @@
 # Changelog
 
+# 0.0.4
+
+##### Enhancements
+
+* Search for `.xcworkspace` recursively |
+  [Delisa Mason](https://github.com/kattrali) |
+  [#8](https://github.com/mneorr/xclisten/pull/8)
+* Added some tests and CI integration \o/
+* Added `--workspace -w` flag to specify a custom workspace location
+* Specified `macosx` sdk rather than nothing on OSX builds
+
+
 # 0.0.3
 
 ##### Enhancements
