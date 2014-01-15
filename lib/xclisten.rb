@@ -27,15 +27,15 @@ class XCListen
   end
 
   def project_name
-    File.basename(workspace_path, ".*") if workspace_path
+    @project_name ||= File.basename(workspace_path, ".*") if workspace_path
   end
 
   def xcodebuild
-    "xcodebuild -workspace #{@workspace} -scheme #{@scheme} -sdk #{@sdk} -destination 'name=#{@device}'"
+    "xcodebuild -workspace #{workspace} -scheme #{scheme} -sdk #{sdk} -destination 'name=#{device}'"
   end
 
   def install_pods
-    Dir.chdir(File.dirname(workspace_path)) do
+    Dir.chdir(File.dirname(workspace)) do
       system 'pod install'
       puts 'Giving Xcode some time to index...'
       sleep 10
@@ -60,7 +60,7 @@ class XCListen
 
   def listen
     validate_run
-    puts "Started xclistening to #{workspace_path}"
+    puts "Started xclistening to #{workspace}"
     ignored = [/.git/, /.xc(odeproj|workspace|userdata|scheme|config)/, /.lock$/, /\.txt$/, /\.log$/]
 
     listener = Listen.to(Dir.pwd, :ignore => ignored) do |modified, added, removed|

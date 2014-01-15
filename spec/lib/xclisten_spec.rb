@@ -10,10 +10,18 @@ class XCListen
       end
     end
 
+    before(:all) do
+      @base_dir = Dir.pwd
+    end
+
+    after(:each) do
+      Dir.chdir(@base_dir)
+    end
+
     context "Defaults" do
 
       before(:each) do
-        Dir.stub(:glob).and_return(['SampleProject.xcworkspace'])
+        Dir.chdir('fixtures/ObjectiveRecord')
         @xclisten = XCListen.new
       end
 
@@ -26,7 +34,7 @@ class XCListen
       end
 
       it "uses the first found workspace by default" do
-        @xclisten.workspace.should == 'SampleProject.xcworkspace'
+        @xclisten.workspace.should == 'Example/SampleProject.xcworkspace'
       end
 
       it "uses iphonesimulator sdk by default" do
@@ -73,14 +81,6 @@ class XCListen
     end
 
     context "finding the right workspace" do
-
-      before(:all) do
-        @base_dir = Dir.pwd
-      end
-
-      after(:each) do
-        Dir.chdir(@base_dir)
-      end
 
       it "works with one level deep workspace" do
         Dir.chdir('fixtures/ObjectiveRecord')
