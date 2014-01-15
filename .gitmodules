@@ -1,0 +1,12 @@
+[submodule "fixtures/ReactiveCocoa"]
+	path = fixtures/ReactiveCocoa
+	url = https://github.com/ReactiveCocoa/ReactiveCocoa.git
+[submodule "fixtures/Kiwi"]
+	path = fixtures/Kiwi
+	url = https://github.com/allending/Kiwi.git
+[submodule "fixtures/ObjectiveRecord"]
+	path = fixtures/ObjectiveRecord
+	url = https://github.com/mneorr/ObjectiveRecord.git
+[submodule "fixtures/AFNetworking"]
+	path = fixtures/AFNetworking
+	url = https://github.com/AFNetworking/AFNetworking.git
