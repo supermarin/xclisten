@@ -33,7 +33,8 @@ Usage: xclisten [optional flags]
         --osx                        Run with OSX sdk (without simulator)
         --ios                        [DEFAULT] Run with iOS sdk
     -d, --device                     Simulated device [iphone5s, iphone5, iphone4]. Default is iphone5s
-    -s, --scheme                     BYOS (Bring your own scheme)
+    -s, --scheme SCHEME              BYOS (Bring your own scheme)
+    -w, --workspace WORKSPACE        BYOW (Bring your own workspace)
     -h, --help                       Show this message
     -v, --version                    Show version
 ```
