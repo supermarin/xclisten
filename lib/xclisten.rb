@@ -23,7 +23,7 @@ class XCListen
   }
 
   def workspace_path
-    @workspace_path ||= Dir.glob("**/*.xcworkspace").select {|p| !p.include? "xcodeproj"}.first
+    @workspace_path ||= Dir.glob("**/*.xcworkspace").sort_by(&:length).first
   end
 
   def project_name

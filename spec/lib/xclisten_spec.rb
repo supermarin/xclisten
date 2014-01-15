@@ -41,6 +41,11 @@ class XCListen
         @xclisten.sdk.should == 'iphonesimulator'
       end
 
+      it "listens to the closest workspace instead of alphabetically" do
+        Dir.chdir("#{@base_dir}/fixtures/MadeUpProject")
+        XCListen.new.workspace.should == 'MadeUpProject.xcworkspace'
+      end
+
     end
 
     it "initializes with device" do
