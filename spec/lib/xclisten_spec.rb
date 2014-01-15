@@ -10,13 +10,10 @@ class XCListen
       end
     end
 
-    before(:each) do
-      Dir.stub(:glob).and_return(['SampleProject.xcworkspace'])
-    end
-
     context "Defaults" do
 
       before(:each) do
+        Dir.stub(:glob).and_return(['SampleProject.xcworkspace'])
         @xclisten = XCListen.new
       end
 
@@ -73,6 +70,27 @@ class XCListen
       Dir.stub(:glob).and_return([""])
       xclisten = XCListen.new
       xclisten.can_run?.should be_false
+    end
+
+    context "finding the right workspace" do
+
+      before(:all) do
+        @base_dir = Dir.pwd
+      end
+
+      after(:each) do
+        Dir.chdir(@base_dir)
+      end
+
+      it "works with one level deep workspace" do
+        Dir.chdir('fixtures/ObjectiveRecord')
+        XCListen.new.workspace.should == 'Example/SampleProject.xcworkspace'
+      end
+
+      it "works with xcworkspace in the same directory" do
+        Dir.chdir('fixtures/AFNetworking')
+        XCListen.new.workspace.should == 'AFNetworking.xcworkspace'
+      end
     end
   end
 
