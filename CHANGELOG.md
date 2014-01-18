@@ -1,5 +1,12 @@
 # Changelog
 
+# 0.0.7
+
+##### Enhancements
+
+* Forgot to escape schemes & workspaces in 0.0.6. done.
+
+
 # 0.0.6
 
 ##### Enhancements
