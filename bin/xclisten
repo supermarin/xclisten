@@ -22,10 +22,10 @@ OptionParser.new do |opts|
     @options[:device] = device
   end
   opts.on('-s', '--scheme SCHEME', 'BYOS (Bring your own scheme)') do |scheme|
-    @options[:scheme] = scheme
+    @options[:scheme] = Shellwords.escape(scheme)
   end
   opts.on('-w', '--workspace WORKSPACE', 'BYOW (Bring your own workspace)') do |workspace|
-    @options[:workspace] = workspace
+    @options[:workspace] = Shellwords.escape(workspace)
   end
   opts.on_tail('-h', '--help', 'Show this message') { puts opts; exit }
   opts.on_tail("-v", "--version", "Show version") { puts XCListen::VERSION; exit }
