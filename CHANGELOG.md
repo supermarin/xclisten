@@ -1,5 +1,18 @@
 # Changelog
 
+# 0.0.6
+
+##### Enhancements
+
+* Added iPads (`xclisten -d [ipad2, ipad4, ipad_air]`)
+
+# 0.0.5
+
+##### Bug Fixes
+
+* Fixed workspace and device flags
+
+
 # 0.0.4
 
 ##### Enhancements
