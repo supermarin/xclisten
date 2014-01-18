@@ -19,7 +19,10 @@ class XCListen
   IOS_DEVICES = {
     'iphone5s' => 'iPhone Retina (4-inch 64-bit)',
     'iphone5' => 'iPhone Retina (4-inch)',
-    'iphone4' => 'iPhone Retina (3.5-inch)'
+    'iphone4' => 'iPhone Retina (3.5-inch)',
+    'ipad2' => 'iPad',
+    'ipad4' => 'iPad Retina',
+    'ipad_air' => 'iPad Retina (64-bit)'
   }
 
   def workspace_path

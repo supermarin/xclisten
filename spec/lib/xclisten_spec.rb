@@ -18,6 +18,19 @@ class XCListen
       Dir.chdir(@base_dir)
     end
 
+    context "Devices" do
+      let(:devices) { XCListen::IOS_DEVICES }
+
+      it "has ALL of them" do
+        devices['iphone5s'].should == 'iPhone Retina (4-inch 64-bit)'
+        devices['iphone5'].should == 'iPhone Retina (4-inch)'
+        devices['iphone4'].should == 'iPhone Retina (3.5-inch)'
+        devices['ipad2'].should == 'iPad'
+        devices['ipad4'].should == 'iPad Retina'
+        devices['ipad_air'].should == 'iPad Retina (64-bit)'
+      end
+    end
+
     context "Defaults" do
 
       before(:each) do
