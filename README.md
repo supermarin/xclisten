@@ -1,5 +1,6 @@
 # XCListen
 [![Build Status](https://travis-ci.org/mneorr/xclisten.png?branch=master)](https://travis-ci.org/mneorr/xclisten)
+[![Code Climate](https://codeclimate.com/github/mneorr/xclisten.png)](https://codeclimate.com/github/mneorr/xclisten)
 
 A zero-configuration filesystem watcher for ObjectiveC. It determines your workspace and scheme automatically, and:
 
