@@ -85,11 +85,16 @@ class XCListen
       flags = {
         :workspace => 'Example/Sample.xcworkspace',
         :scheme => 'kif',
-        :sdk => 'macosx',
+        :sdk => 'iphoneos',
         :device => 'name=iPhone Retina (4-inch 64-bit)'
       }
       xclisten = XCListen.new(flags)
       xclisten.xcodebuild.should == "xcodebuild -workspace #{flags[:workspace]} -scheme #{flags[:scheme]} -sdk #{flags[:sdk]} -destination '#{flags[:device]}'"
+    end
+
+    it "doesn't specify destination for OSX" do
+      xclisten = XCListen.new(:sdk => 'macosx')
+      xclisten.xcodebuild.should_not include('-destination')
     end
 
     it "knows if it can run" do

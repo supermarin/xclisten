@@ -10,10 +10,10 @@ class XCListen
   attr_reader :workspace
 
   def initialize(opts = {})
-    @device = IOS_DEVICES[opts[:device]] || IOS_DEVICES['iphone5s']
     @scheme = opts[:scheme] || project_name
     @sdk = opts[:sdk] || 'iphonesimulator'
     @workspace = opts[:workspace] || workspace_path
+    @device = IOS_DEVICES[opts[:device]] || IOS_DEVICES['iphone5s']
   end
 
   IOS_DEVICES = {
@@ -34,7 +34,9 @@ class XCListen
   end
 
   def xcodebuild
-    "xcodebuild -workspace #{workspace} -scheme #{scheme} -sdk #{sdk} -destination 'name=#{device}'"
+    cmd = "xcodebuild -workspace #{workspace} -scheme #{scheme} -sdk #{sdk}"
+    cmd += " -destination 'name=#{device}'" unless @sdk == 'macosx'
+    cmd
   end
 
   def install_pods
