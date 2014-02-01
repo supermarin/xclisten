@@ -1,8 +1,10 @@
 # XCListen
 [![Build Status](https://travis-ci.org/mneorr/xclisten.png?branch=master)](https://travis-ci.org/mneorr/xclisten)
 [![Code Climate](https://codeclimate.com/github/mneorr/xclisten.png)](https://codeclimate.com/github/mneorr/xclisten)
+> You hit Save, he runs tests
 
-A zero-configuration filesystem watcher for ObjectiveC. It determines your workspace and scheme automatically, and:
+A zero-configuration filesystem watcher for ObjectiveC.
+It determines your build settings automatically, and:
 
 - runs tests each time you save a file
 - runs `pod install` each time you save the Podfile
@@ -43,6 +45,12 @@ Usage: xclisten [optional flags]
 ## Something went wrong!
 
 No worries, just `tail -f xcodebuild_error.log` and let us know what's happening.
+
+## Acknowledgements
+
+This project is inspired by many general-purpose listeners out there,
+such as [kicker](https://github.com/alloy/kicker) and [Guard](https://github.com/guard/guard).
+
 
 ## TODO
 
