@@ -18,7 +18,7 @@ OptionParser.new do |opts|
   opts.on('--ios', '[DEFAULT] Run with iOS sdk') do
     @options[:sdk] = 'iphonesimulator'
   end
-  opts.on('-d', '--device', 'Simulated device [iphone5s, iphone5, iphone4, ipad2, ipad4, ipad_air]. Default is iphone5s') do |device|
+  opts.on('-d', '--device DEVICE', 'Simulated device [iphone5s, iphone5, iphone4, ipad2, ipad4, ipad_air]. Default is iphone5s') do |device|
     @options[:device] = device
   end
   opts.on('-s', '--scheme SCHEME', 'BYOS (Bring your own scheme)') do |scheme|
