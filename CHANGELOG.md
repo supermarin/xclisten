@@ -1,5 +1,17 @@
 # Changelog
 
+# 0.0.8
+
+##### Bug Fixes
+
+* Fixed building for OSX. We were specifying `destination` which was bad. |
+  [#17](https://github.com/mneorr/xclisten/issues/17)
+* Fixed Shellwords import that was crashing system ruby (2.0.0) |
+  [#15](https://github.com/mneorr/xclisten/issues/15)
+* Fixed devices flags |
+  [#16](https://github.com/mneorr/xclisten/issues/16)
+
+
 # 0.0.7
 
 ##### Enhancements
