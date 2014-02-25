@@ -1,6 +1,6 @@
 # XCListen
-[![Build Status](https://travis-ci.org/mneorr/xclisten.png?branch=master)](https://travis-ci.org/mneorr/xclisten)
-[![Code Climate](https://codeclimate.com/github/mneorr/xclisten.png)](https://codeclimate.com/github/mneorr/xclisten)
+[![Build Status](https://travis-ci.org/supermarin/xclisten.png?branch=master)](https://travis-ci.org/supermarin/xclisten)
+[![Code Climate](https://codeclimate.com/github/supermarin/xclisten.png)](https://codeclimate.com/github/supermarin/xclisten)
 
 A __zero-configuration__ file watcher for ObjectiveC.
 
@@ -8,7 +8,7 @@ A __zero-configuration__ file watcher for ObjectiveC.
 It:
 - runs tests each time you save a file
 - runs `pod install` each time you save the Podfile
-- formats your tests with RSpec-style output using [XCPretty](https://github.com/mneorr/xcpretty)
+- formats your tests with RSpec-style output using [XCPretty](https://github.com/supermarin/xcpretty)
 
 
 ## Installation
