@@ -35,7 +35,7 @@ If you have an OSX project, you'll want to run it with `--osx` flag.
 Usage: xclisten [optional flags]
         --osx                        Run with OSX sdk (without simulator)
         --ios                        [DEFAULT] Run with iOS sdk
-    -d, --device                     Simulated device [iphone5s, iphone5, iphone4]. Default is iphone5s
+    -d, --device                     Simulated device [iphone5s, iphone5, iphone4, ipad2, ipad4, ipad_air]. Default is iphone5s
     -s, --scheme SCHEME              BYOS (Bring your own scheme)
     -w, --workspace WORKSPACE        BYOW (Bring your own workspace)
     -h, --help                       Show this message
