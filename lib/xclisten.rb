@@ -34,9 +34,18 @@ class XCListen
   end
 
   def xcodebuild
-    cmd = "xcodebuild -workspace #{workspace} -scheme #{scheme} -sdk #{sdk}"
+    cmd = "xcodebuild -workspace #{workspace} -scheme #{scheme} -sdk #{sdk} -configuration Debug"
     cmd += " -destination 'name=#{device}'" unless @sdk == 'macosx'
+    cmd += " -arch #{@arch} #{valid_archs}" if @arch
     cmd
+  end
+
+  def xctest
+    @@xctest ||= begin
+      cmd = `#{xcodebuild} -find-executable xctest`.strip
+      arch_cmd = native_arch ? "arch -arch #{native_arch}" : ''
+      "#{arch_cmd} -e DYLD_ROOT_PATH='#{@env['SDK_DIR']}' #{cmd}"
+    end
   end
 
   def install_pods
@@ -47,8 +56,55 @@ class XCListen
     end
   end
 
-  def run_tests
-    ShellTask.run("#{xcodebuild} test 2> xcodebuild_error.log | xcpretty -tc")
+  def configure_environment
+    @env = {}
+    @env_text = ""
+    task = `#{xcodebuild} -showBuildSettings test`
+    task.each_line do |line|
+      if line =~ /^\s(.*)=(.*)/
+        variable, value = line.split('=').map {|v| v.strip }
+        @env[variable] = value
+        @env_text += "#{variable}=#{value} "
+      end
+    end
+    @env['DYLD_FRAMEWORK_PATH'] = @env['BUILT_PRODUCTS_DIR']
+    @env['DYLD_LIBRARY_PATH']   = @env['BUILT_PRODUCTS_DIR']
+    @bundle_path = "#{@env['BUILT_PRODUCTS_DIR']}/#{@env['FULL_PRODUCT_NAME']}"
+  end
+
+  def run_xctest(test_classes)
+    configure_environment
+    ShellTask.run("#{xcodebuild} 1> /dev/null")
+    test_classes.each do |test_class|
+      ShellTask.run("#{@env_text} #{xctest} -XCTest #{test_class} #{@bundle_path}")
+    end
+  end
+
+  def is_valid_arch?(arch)
+    ['i386', 'x86_64'].include?(arch)
+  end
+
+  def native_arch
+    @native_arch ||= begin
+      arch = `file #{@bundle_path}`.split(' ').last
+      native_arch = is_valid_arch?(arch) ? arch : @env['CURRENT_ARCH']
+      is_valid_arch?(native_arch) ? native_arch : 'i386'
+    end
+  end
+
+  def valid_archs
+    return unless @env && @env['VALID_ARCHS'] && @env['CURRENT_ARCH']
+
+    @env['VALID_ARCHS'].include?(@env['CURRENT_ARCH']) ? '' : "VALID_ARCHS=#{@arch}"
+  end
+
+  def run_tests(test_classes)
+    puts "test classes: #{test_classes}"
+    if test_classes and test_classes.size > 0
+      run_xctest(test_classes)
+    else
+      ShellTask.run("#{xcodebuild} test 2> xcodebuild_error.log | xcpretty -tc")
+    end
   end
 
   #TODO TEST THIS SPIKE
@@ -73,12 +129,22 @@ class XCListen
       if modified.first =~ /Podfile$/
         install_pods
       else
-        run_tests
+        run_tests(find_test_classes(modified))
       end
     end
 
     listener.start
     sleep
+  end
+
+  def find_test_classes(files)
+    files.map do |path|
+      if path =~ %r{/(\w+(Tests|Spec))\.(h|m)$}
+        path
+      elsif path =~ %r{/(\w+)\.(h|m)$}
+        Dir.glob("**/#{$1}{Tests,Spec}.m")
+      end
+    end.flatten.compact.map {|path| File.basename(path, ".*") }
   end
 
 end
