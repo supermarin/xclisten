@@ -17,12 +17,14 @@ class XCListen
   end
 
   IOS_DEVICES = {
+    # TODO Update iPhone names.
     'iphone5s' => 'iPhone Retina (4-inch 64-bit)',
     'iphone5' => 'iPhone Retina (4-inch)',
     'iphone4' => 'iPhone Retina (3.5-inch)',
-    'ipad2' => 'iPad',
-    'ipad4' => 'iPad Retina',
-    'ipad_air' => 'iPad Retina (64-bit)'
+    'ipad2' => 'iPad 2',
+    'ipad_air' => 'iPad Air',
+    'ipad_retina' => 'iPad Retina',
+    'ipad_resizable' => 'Resizable iPad'
   }
 
   def workspace_path
