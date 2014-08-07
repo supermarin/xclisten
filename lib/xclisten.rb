@@ -50,7 +50,7 @@ class XCListen
   end
 
   def run_tests
-    ShellTask.run("#{xcodebuild} test 2> xcodebuild_error.log | xcpretty -tc")
+    ShellTask.run("#{xcodebuild} test 2>| xcodebuild_error.log | xcpretty -tc")
   end
 
   #TODO TEST THIS SPIKE
