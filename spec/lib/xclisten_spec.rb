@@ -22,12 +22,14 @@ class XCListen
       let(:devices) { XCListen::IOS_DEVICES }
 
       it "has ALL of them" do
-        devices['iphone5s'].should == 'iPhone Retina (4-inch 64-bit)'
-        devices['iphone5'].should == 'iPhone Retina (4-inch)'
-        devices['iphone4'].should == 'iPhone Retina (3.5-inch)'
-        devices['ipad2'].should == 'iPad'
-        devices['ipad4'].should == 'iPad Retina'
-        devices['ipad_air'].should == 'iPad Retina (64-bit)'
+        devices['iphone6_plus'].should == 'iPhone 6 Plus'
+        devices['iphone6'].should == 'iPhone 6'
+        devices['iphone5s'].should == 'iPhone 5s'
+        devices['iphone5'].should == 'iPhone 5'
+        devices['iphone4s'].should == 'iPhone 4s'
+        devices['ipad2'].should == 'iPad 2'
+        devices['ipad_retina'].should == 'iPad Retina'
+        devices['ipad_air'].should == 'iPad Air'
       end
     end
 
@@ -39,7 +41,7 @@ class XCListen
       end
 
       it "runs runs tests on iPhone 5s by default" do
-        @xclisten.device.should == 'iPhone Retina (4-inch 64-bit)'
+        @xclisten.device.should == 'iPhone 5s'
       end
 
       it "uses the project name as the default scheme" do
@@ -63,7 +65,7 @@ class XCListen
 
     it "initializes with device" do
       xclisten = XCListen.new(:device => 'iphone5')
-      xclisten.device.should == 'iPhone Retina (4-inch)'
+      xclisten.device.should == 'iPhone 5'
     end
 
     it "initializes with a different workspace" do
@@ -86,7 +88,7 @@ class XCListen
         :workspace => 'Example/Sample.xcworkspace',
         :scheme => 'kif',
         :sdk => 'iphoneos',
-        :device => 'name=iPhone Retina (4-inch 64-bit)'
+        :device => 'name=iPhone 5s'
       }
       xclisten = XCListen.new(flags)
       xclisten.xcodebuild.should == "xcodebuild -workspace #{flags[:workspace]} -scheme #{flags[:scheme]} -sdk #{flags[:sdk]} -destination '#{flags[:device]}'"
@@ -100,7 +102,7 @@ class XCListen
     it "knows if it can run" do
       Dir.stub(:glob).and_return([""])
       xclisten = XCListen.new
-      xclisten.can_run?.should be_false
+      xclisten.can_run?.should be_falsey
     end
 
     context "finding the right workspace" do
@@ -118,4 +120,3 @@ class XCListen
   end
 
 end
-
