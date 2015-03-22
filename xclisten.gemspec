@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["mneorr@gmail.com"]
   spec.summary       = %q{Run ObjectiveC tests each time you hit save}
   spec.description   = %q{Zero configuration file watcher for Objective-C that runs tests, installs Pods each time you save a file}
-  spec.homepage      = "https://github.com/mneorr/xclisten"
+  spec.homepage      = "https://github.com/supermarin/xclisten"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
@@ -25,4 +25,3 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec"
   spec.add_development_dependency "rake"
 end
-
