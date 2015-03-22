@@ -1,7 +1,7 @@
 require "bundler/gem_tasks"
 
 task :spec do
-  sh 'rspec spec --color --format nested'
+  sh 'rspec spec --color --format documentation'
 end
 
 task :cucumber do
@@ -12,4 +12,3 @@ task :ci do
   Rake::Task[:spec].invoke
   #Rake::Task[:cucumber].invoke
 end
-
